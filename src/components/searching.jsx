@@ -1,26 +1,33 @@
 import { useContext } from "react";
-import Nav from "./navbar";
 import { Helper } from "../store/store";
 import { ToastContainer } from 'react-toastify';
 import { AllCommunityModule, ModuleRegistry } from 'ag-charts-community';
 import { AgCharts } from 'ag-charts-react';
-
-
 import { CChart } from '@coreui/react-chartjs'
 // Enable all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 function Search(){
-    const{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,setarraysize,arrayselemnts,setarrayelements,options}=useContext(Helper);
-    const chartdata={
-        labels:arrayselemnts.map((_,i)=>i+1),
-        datasets:[
-            {
-                data:arrayselemnts,
-                backgroundColor:"rgba(54,162,235,0.6)",
-    
-            },
-        ],
-    };
+    const{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex}=useContext(Helper);
+     const chartdata={
+        labels:arrayselemnts,
+            datasets:[
+                {
+                    data:arrayselemnts,
+                    backgroundColor:arrayselemnts.map((_,index)=>{
+                        if(index===foundindex){
+                            return "purple";
+                        }
+                        if(index===activeindex){
+                            return "green";
+                        }
+                        return "rgba(54,162,235,0.9)"
+                    })
+                    
+                    
+                    
+                },
+            ],
+        };
     
     return <div className="mt-30">
         <ToastContainer/>
@@ -32,16 +39,25 @@ function Search(){
                 </div>
                 <h1>LINEAR SEARCH GRAPH</h1>
                 <div>
-                     <CChart type="bar" data={chartdata} options={options} className="w-250"/>
+                     <CChart type="bar" data={chartdata} options={options} className="w-250 "/>
+                     
                    
                 </div>
                 <div>
+                    <h1 className="text-2xl text-center">THIS IS YOUR GIVEN ARRAY </h1>
                     <label htmlFor="enter array size">ARRAY SIZE</label>
                     <input type="number" placeholder="enter array size" onChange={(e)=>setarraysize(e.target.value)}/>
                     <button className="bg-green-800 p-4 text-white rounded-2xl" onClick={()=>RandomArray("linearsearch")}>GENRATE</button>
                 </div>
+                <div className="mt-5">
+                    <label htmlFor="search key">ENTER SEARCH ELEMENT</label>
+                    <input onChange={(e)=>setsearchelement(e.target.value)} type="number"placeholder="enter search element"/>
+                </div>
+                <div className="mt-5">
+                    <button onClick={Linearsearch} className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
+                </div>
                 <div>
-                    <button className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
+                    <h1>THE FINAL RESULT IS {result}</h1>
                 </div>
 
             </div>:<></>}
