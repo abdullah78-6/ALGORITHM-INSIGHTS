@@ -7,7 +7,7 @@ import { CChart } from '@coreui/react-chartjs'
 // Enable all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 function Search(){
-    const{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex}=useContext(Helper);
+    const{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range}=useContext(Helper);
      const chartdata={
         labels:arrayselemnts,
             datasets:[
@@ -20,6 +20,9 @@ function Search(){
                         if(index===activeindex){
                             return "green";
                         }
+                        if(index===range.start||index===range.end){
+                            return "green";
+                        }
                         return "rgba(54,162,235,0.9)"
                     })
                     
@@ -28,7 +31,6 @@ function Search(){
                 },
             ],
         };
-    
     return <div className="mt-30">
         <ToastContainer/>
         
@@ -57,7 +59,7 @@ function Search(){
                     <button onClick={Linearsearch} className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
                 </div>
                 <div>
-                    <h1>THE FINAL RESULT IS {result}</h1>
+                    <h1>THE FINAL RESULT IS: {result}</h1>
                 </div>
 
             </div>:<></>}
@@ -77,7 +79,14 @@ function Search(){
                     <button className="bg-green-800 p-4 text-white rounded-2xl" onClick={()=>RandomArray("binarysearch")}>GENRATE</button>
                 </div>
                 <div>
-                    <button className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
+                    <label for="search">ENTER SEARCH ELEMENT</label>
+                    <input type="Number"placeholder="enter search element" onChange={(e)=>setbkey(e.target.value)}/>
+                </div>
+                <div>
+                    <button onClick={Binary} className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
+                </div>
+                <div>
+                    <h1>THE FINAL RESULT IS: {result2}</h1>
                 </div>
 
 

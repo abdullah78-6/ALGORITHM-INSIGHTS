@@ -8,8 +8,11 @@ const [arraysize,setarraysize]=useState();
 const [arrayselemnts,setarrayelements]=useState([]);
 const [key,setsearchelement]=useState();
 const[result,setresult]=useState("");
+const[result2,setresult2]=useState("");
 const[activeindex,setactiveindex]=useState(-1);
 const [foundindex,setfoundindex]=useState(-1);
+const [bkey,setbkey]=useState();
+const [range,setrange]=useState({start:-1,end:-1});
 const [options,setoptions]=useState({
      plugins: {
       legend: {
@@ -89,7 +92,42 @@ async function Linearsearch(){
   setresult(`THE KEY IS NOT FOUND `);
   
   }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex}}>
+  async function Binary(){
+  const bskey=Number(bkey);
+    if(!bskey){
+    toast.error("PLEASE ENTER THE KEY ",{theme:"colored"});
+    return ;
+    }
+    let start=0;
+    let end=arrayselemnts.length-1;
+    setfoundindex(-1);
+    setrange({start,end});
+    while(start<=end){
+    let mid=Math.floor((start+end)/2);
+    setactiveindex(mid);
+    await new Promise(res=>setTimeout(res,600));
+    if(arrayselemnts[mid]===bskey){
+      setfoundindex(mid);
+      setactiveindex(-1);
+      setrange({start:-1,end:-1});
+         setresult2(`THE KEY IS FOUND AT INDEX ${mid}`);
+        return ;
+      }
+      if(bskey>arrayselemnts[mid]){
+        start=mid+1;
+      }
+      else{
+        end=mid-1;
+    }
+      setrange({start,end});
+      mid=(start+end)/2;
+     
+    }
+    setactiveindex(-1);
+    setrange({start:-1,end:-1});
+    setresult2("THE KEY IS NOT FOUND ");
+}
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range}}>
         {children}
     </Helper.Provider>
 
