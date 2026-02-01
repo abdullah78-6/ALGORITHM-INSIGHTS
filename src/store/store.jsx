@@ -13,6 +13,11 @@ const[activeindex,setactiveindex]=useState(-1);
 const [foundindex,setfoundindex]=useState(-1);
 const [bkey,setbkey]=useState();
 const [range,setrange]=useState({start:-1,end:-1});
+const[merge,setmerge]=useState(false);
+const[quick,setquick]=useState(false);
+const[selection,setselection]=useState(false);
+const[insertion,setinsertion]=useState(false);
+const[bubble,setbubble]=useState(false);
 const [options,setoptions]=useState({
      plugins: {
       legend: {
@@ -62,6 +67,67 @@ function RandomArray(name){
         setarrayelements(newarray2);
         
         toast.success("ARRAY CREATED FOR LINEAR SEARCH ",{theme:"colored"});
+
+    }
+    if(name==="merge"){
+        // unsorted order 
+        const range=arraysize;
+        const newarray2=Array.from(
+            {length:arraysize},
+            ()=>Math.floor(Math.random()*range)+1
+        );
+        setarrayelements(newarray2);
+        
+        toast.success("ARRAY CREATED FOR MERGE SORT ",{theme:"colored"});
+        
+
+    }
+    if(name==="quick"){
+        // unsorted order 
+        const range=arraysize;
+        const newarray2=Array.from(
+            {length:arraysize},
+            ()=>Math.floor(Math.random()*range)+1
+        );
+        setarrayelements(newarray2);
+        
+        toast.success("ARRAY CREATED FOR QUICK SORT ",{theme:"colored"});
+
+    }
+    if(name==="select"){
+        // unsorted order 
+        const range=arraysize;
+        const newarray2=Array.from(
+            {length:arraysize},
+            ()=>Math.floor(Math.random()*range)+1
+        );
+        setarrayelements(newarray2);
+        
+        toast.success("ARRAY CREATED FOR SELECTION SORT ",{theme:"colored"});
+
+    }
+    if(name==="insert"){
+        // unsorted order 
+        const range=arraysize;
+        const newarray2=Array.from(
+            {length:arraysize},
+            ()=>Math.floor(Math.random()*range)+1
+        );
+        setarrayelements(newarray2);
+        
+        toast.success("ARRAY CREATED FOR INSERTION SORT ",{theme:"colored"});
+
+    }
+    if(name==="bubble"){
+        // unsorted order 
+        const range=arraysize;
+        const newarray2=Array.from(
+            {length:arraysize},
+            ()=>Math.floor(Math.random()*range)+1
+        );
+        setarrayelements(newarray2);
+        
+        toast.success("ARRAY CREATED FOR BUBBLE SORT ",{theme:"colored"});
 
     }
 
@@ -127,7 +193,7 @@ async function Linearsearch(){
     setrange({start:-1,end:-1});
     setresult2("THE KEY IS NOT FOUND ");
 }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range}}>
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble}}>
         {children}
     </Helper.Provider>
 
