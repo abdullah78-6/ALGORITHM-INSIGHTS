@@ -3,23 +3,26 @@ import { Helper } from "../store/store";
 import { CChart } from '@coreui/react-chartjs'
 import { ToastContainer } from 'react-toastify';
 function Sort(){
-    const {RandomArray,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,arrayselemnts,options,setarraysize,activeindex,foundindex,range}=useContext(Helper);
+    const {RandomArray,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,arrayselemnts,options,setarraysize,activeindex,foundindex,range,Selection,time,pass}=useContext(Helper);
     const chartdata={
         labels:arrayselemnts,
             datasets:[
                 {
                     data:arrayselemnts,
                     backgroundColor:arrayselemnts.map((_,index)=>{
-                        if(index===foundindex){
-                            return "purple";
-                        }
-                        if(index===activeindex){
-                            return "green";
-                        }
-                        if(index===range.start||index===range.end){
-                            return "green";
-                        }
+                       if(index<=range.start){
+                        return "pink";
+                       }
+                       if(index===activeindex||index===range.end){
+                        return "gold";
+                       }
+                        
                         return "rgba(54,162,235,0.9)"
+                            
+                         
+                        
+                        
+                        
                     })
                     
                     
@@ -105,7 +108,18 @@ function Sort(){
                     <button className="bg-green-800 p-4 text-white rounded-2xl" onClick={()=>RandomArray("select")}>GENRATE</button>
                 </div>
                  <div className="mt-5">
-                    <button  className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
+                    <button onClick={Selection}  className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
+                </div>
+                <div>
+                    <h2>THE TIME IN SECONDS IS: {time}sec</h2>
+                </div>
+                <div>
+                    {pass.map((p,index)=>(
+                        <div key={index}>
+                        <h1>PASS {index+1}</h1>
+                        <p>[{p.join(",")}]</p>
+                        </div>
+                    ))}
                 </div>
                 
             </div>:<></>}
