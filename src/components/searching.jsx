@@ -34,7 +34,7 @@ function Search(){
     return <div className="mt-5">
         <ToastContainer/>
         <div className="flex  justify-center items-center flex-col">
-            <h1 className="text-center  p-3 text-6xl text-blue-900    ">SEARCHING IN PROGRAMMING</h1>
+            <h1 className="text-center font-bold  p-3 text-6xl text-blue-900    ">SEARCHING IN PROGRAMMING</h1>
             <div className="mt-3">
                 <p className="text-2xl capitalize text-blue-700 w-250 ">
                    Searching in programming is a fundamental concept used to locate a specific element or piece of data within a collection such as an array, list, or database. It plays a crucial role in almost every software application, from finding a user in a system to retrieving information from large datasets. Efficient searching helps reduce time complexity and improves the overall performance of programs, especially when dealing with large amounts of data.

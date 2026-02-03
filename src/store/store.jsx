@@ -19,7 +19,7 @@ const[selection,setselection]=useState(false);
 const[insertion,setinsertion]=useState(false);
 const[bubble,setbubble]=useState(false);
 const[time,settime]=useState();
-const [speed,setspeed]=useState();
+let [speed,setspeed]=useState(0.25);
 const[pass,setpass]=useState([]);
 const [options,setoptions]=useState({
      plugins: {
@@ -202,8 +202,12 @@ async function Linearsearch(){
     setrange({start:-1,end:-1});
     setresult2("THE KEY IS NOT FOUND ");
 }
+const speeds=(basedelay)=>{
+  return new Promise(resolve=>setTimeout(resolve,basedelay/Number(speed)));
+}
 async function Selection(){
-  if(arrayselemnts.length===0){
+  
+  if(arrayselemnts.length===0||!speed){
     toast.error("PLEASE GENRATE ARRAY FIRST",{theme:"colored"});
     return ;
   }
@@ -215,18 +219,21 @@ async function Selection(){
     
     
     setrange({start:i-1,end:minindex});
-    await new Promise(res=>setTimeout(res,500));
+    
+    await speeds(500);
     for(let j=i+1;j<arr.length;j++){
       setactiveindex(j);
       setrange({start:i-1,end:minindex});
-      await new Promise(res=>setTimeout(res,400));
+    
+      await speeds(400);
       if(arr[j]<arr[minindex]){
         minindex=j;
       setrange({start:i-1,end:minindex});
-        await new Promise(res=>setTimeout(res,400));
+    
+        await speeds(400);
       }
     }
-    // swap(arrayselemnts[minindex],arrayselemnts[i]);
+    
     let temp=arr[minindex];
     arr[minindex]=arr[i];
     arr[i]=temp;
@@ -234,7 +241,8 @@ async function Selection(){
     setpass(prev=>[...prev,[...arr]]);
     setrange({start:i,end:-1});
     setactiveindex(-1);
-    await new Promise(res=>setTimeout(res,500));
+    
+    await speeds(500);
     
   }
   setrange({start:arr.length-1,end:-1});
@@ -242,7 +250,7 @@ async function Selection(){
   const totaltime=((endtime-starttime)/1000).toFixed(2);
   settime(totaltime);
 }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass}}>
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed}}>
         {children}
     </Helper.Provider>
 
