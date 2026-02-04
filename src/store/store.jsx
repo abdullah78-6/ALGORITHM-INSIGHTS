@@ -250,7 +250,51 @@ async function Selection(){
   const totaltime=((endtime-starttime)/1000).toFixed(2);
   settime(totaltime);
 }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed}}>
+async function Insertion(){
+if(arrayselemnts.length===0||!speed){
+    toast.error("PLEASE GENRATE ARRAY FIRST",{theme:"colored"});
+    return ;
+  }
+  const starttime2=performance.now();
+  let arr=[...arrayselemnts];
+  
+  for(let i=1;i<arr.length;i++){
+    setrange({start:i-1,end:i});
+    setactiveindex(i);
+    await speeds(500);
+    let temp=arr[i];
+    let j=i-1;
+    
+    
+    for(;j>=0;j--){
+      setactiveindex(j);
+      setrange({start:i-1,end:j});
+      await speeds(400);
+      if(arr[j]>temp){
+        arr[j+1]=arr[j];
+        setarrayelements([...arr]);
+      }
+      else{
+        break;
+      }
+    }
+    
+    arr[j+1]=temp;
+    setarrayelements([...arr]);
+    setpass(prev=>[...prev,[...arr]]);
+    setactiveindex(-1);
+    setrange({start:i,end:-1});
+    await speeds(400);
+    
+}
+setrange({start:arr.length-1,end:-1});
+const endtime2=performance.now();
+const totaltime2=((endtime2-starttime2)/1000).toFixed(2);
+settime(totaltime2);
+  
+
+}
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion}}>
         {children}
     </Helper.Provider>
 
