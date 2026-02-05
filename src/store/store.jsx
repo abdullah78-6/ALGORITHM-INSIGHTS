@@ -47,6 +47,7 @@ const [options,setoptions]=useState({
 })
    
 function RandomArray(name){
+  
   setrange({start:-1,end:-1})
   setactiveindex(-1);
   setfoundindex(-1);
@@ -294,7 +295,59 @@ settime(totaltime2);
   
 
 }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion}}>
+async function Bubbles(){
+  if(arrayselemnts.length===0||!speed){
+    toast.error("PLEASE GENRATE ARRAY FIRST",{theme:"colored"});
+    return ;
+  }
+  
+  setactiveindex(-1);
+  setrange({start:-1,end:-1});
+  await speeds(300);
+  const starttime3=performance.now();
+  let arr=[...arrayselemnts];
+  
+  for(let i=1;i<arr.length;i++){
+    
+    let swapped=false;
+    setrange({start:-1,end:-1});
+    
+    for(let j=0;j<arr.length-i;j++){
+      setactiveindex(j);
+    await speeds(400);
+      if(arr[j]>arr[j+1]){
+        
+        let temp=arr[j];
+        arr[j]=arr[j+1];
+        arr[j+1]=temp;
+
+        swapped=true;
+        setarrayelements([...arr]);
+        await speeds(400);
+    
+        
+      }
+    }
+    setrange({start:arr.length-i,end:-1});
+    setactiveindex(-1);
+   
+    if(swapped===false){
+      break;
+    }
+     
+    setpass(prev=>[...prev,[...arr]]);
+    
+    
+    
+  }
+  setrange({start:0 ,end:-1});
+ 
+  const endtime3=performance.now();
+  const totaltime3=((endtime3-starttime3)/1000).toFixed(2);
+  settime(totaltime3);
+  setarrayelements([...arr]);
+}
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles}}>
         {children}
     </Helper.Provider>
 
