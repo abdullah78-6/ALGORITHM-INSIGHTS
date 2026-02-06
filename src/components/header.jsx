@@ -41,7 +41,7 @@ function Head(){
           onClick={() => navigate("/comp")}
           className="bg-blue-800 px-6 py-4 text-white rounded-2xl hover:bg-blue-900 transition-all duration-300 w-64"
         >
-          EXPLORE COMPARISON
+           COMPARE SEARCHING
         </button>
       </div>
     </div>

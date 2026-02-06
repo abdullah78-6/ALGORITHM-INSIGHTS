@@ -31,7 +31,7 @@ function Nav() {
 
         <Link to="/comp">
           <li className="cursor-pointer hover:text-white hover:border-b-2 border-blue-300 transition-all duration-300">
-            COMPARING
+            COMPARE-SEARCHING
           </li>
         </Link>
       </ul>

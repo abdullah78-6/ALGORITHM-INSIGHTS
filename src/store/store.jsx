@@ -21,6 +21,8 @@ const[bubble,setbubble]=useState(false);
 const[time,settime]=useState();
 let [speed,setspeed]=useState(0.25);
 const[pass,setpass]=useState([]);
+const [binarytime,setbinarytime]=useState();
+const [lineartime,setlineartime]=useState();
 const [options,setoptions]=useState({
      plugins: {
       legend: {
@@ -149,6 +151,7 @@ async function Linearsearch(){
     return ;
   }
   const searchkey=Number(key);
+  let starttime1=performance.now();
   setfoundindex(-1);
   setresult("");
   for(let i=0;i<arrayselemnts.length;i++){
@@ -157,6 +160,9 @@ async function Linearsearch(){
     if(arrayselemnts[i]===searchkey){
       setfoundindex(i);
       setactiveindex(-1);
+      let endtime1=performance.now();
+  const totaltime1=((endtime1-starttime1)/1000).toFixed(2);
+  setlineartime(totaltime1);
       setresult(`THE KEY FOUND AT INDEX ${i}`);
       
       return ;
@@ -165,7 +171,7 @@ async function Linearsearch(){
       
   
   }
-  setresult(`THE KEY IS NOT FOUND `);
+   setresult(`THE KEY IS NOT FOUND `);
   
   }
   async function Binary(){
@@ -176,6 +182,7 @@ async function Linearsearch(){
     }
     let start=0;
     let end=arrayselemnts.length-1;
+    const startb=performance.now();
     setfoundindex(-1);
     setrange({start,end});
     while(start<=end){
@@ -186,6 +193,9 @@ async function Linearsearch(){
       setfoundindex(mid);
       setactiveindex(-1);
       setrange({start:-1,end:-1});
+       const endb=performance.now();
+    const totalb=((endb-startb)/1000).toFixed(2);
+    setbinarytime(totalb);
          setresult2(`THE KEY IS FOUND AT INDEX ${mid}`);
         return ;
       }
@@ -201,6 +211,7 @@ async function Linearsearch(){
     }
     setactiveindex(-1);
     setrange({start:-1,end:-1});
+   
     setresult2("THE KEY IS NOT FOUND ");
 }
 const speeds=(basedelay)=>{
@@ -347,7 +358,7 @@ async function Bubbles(){
   settime(totaltime3);
   setarrayelements([...arr]);
 }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles}}>
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles,lineartime,binarytime}}>
         {children}
     </Helper.Provider>
 
