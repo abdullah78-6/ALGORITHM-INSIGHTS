@@ -3,6 +3,7 @@ import {  toast } from 'react-toastify';
 export const Helper=createContext();
 export const Gives=({children})=>{
 const [linearsearch,setlinearsearch]=useState(false);
+const [pivotindex,setpivotindex]=useState(-1);
 const [binarysearch,setbinarysearch]=useState(false);
 const [arraysize,setarraysize]=useState();
 const [arrayselemnts,setarrayelements]=useState([]);
@@ -358,7 +359,69 @@ async function Bubbles(){
   settime(totaltime3);
   setarrayelements([...arr]);
 }
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles,lineartime,binarytime}}>
+async function Quicks(){
+  if(arrayselemnts.length===0||!speed){
+    toast.error("PLEASE GENRATE ARRAY FIRST",{theme:"colored"});
+    return ;
+  }
+   const startq = performance.now();
+  let arr = [...arrayselemnts];
+
+  async function partition(low, high) {
+    const pivot = arr[high];
+    setpivotindex(high);
+    setrange({start:low,end:high});
+    let i = low - 1;
+
+  
+  
+
+    for (let j = low; j < high; j++) {
+      setactiveindex(j);
+      await speeds(400);
+  
+
+      if (arr[j] < pivot) {
+        i++;
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+        setarrayelements([...arr]);
+        await speeds(400);
+  
+      }
+    }
+
+  
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    setarrayelements([...arr]);
+    await speeds(400);
+  
+      setpivotindex(-1);
+    return i + 1;
+  }
+
+  async function quickSort(low, high) {
+    if (low < high) {
+      const pi = await partition(low, high);
+      await quickSort(low, pi - 1);
+      await quickSort(pi + 1, high);
+    }
+  }
+
+  await quickSort(0, arr.length - 1);
+
+  
+  setactiveindex(-1);
+  setpivotindex(-1);
+  setrange({start:arr.length-1,end:-1});
+  setarrayelements([...arr]);
+
+  const endq = performance.now();
+  const totalq = ((endq - startq) / 1000).toFixed(2);
+  settime(totalq);
+}
+  
+
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles,lineartime,binarytime,Quicks,pivotindex}}>
         {children}
     </Helper.Provider>
 

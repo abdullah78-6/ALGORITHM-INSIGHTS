@@ -10,6 +10,7 @@ function Head(){
         <h1 className="text-3xl md:text-5xl font-bold text-blue-900 mb-6">
           ALGORITHM INSIGHTS
         </h1>
+        <h1 className="mt-0 text-3xl text-red-800">NOTE: FOR EACH ALGORITHM GENRATE NEW ARRAY FIRST IF IT IS ALREADY PRESENT  </h1>
 
         <p className="text-base md:text-lg text-gray-700 leading-relaxed">
           Algorithm Insight is an interactive learning platform designed to help

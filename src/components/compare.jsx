@@ -122,7 +122,7 @@ function Compare(){
                     </button>
 
                     <h1 className="text-center text-lg font-semibold">
-                        TOTAL TIME : {lineartime} ms
+                        TOTAL TIME : {lineartime} sec
                     </h1>
 
                     <h1 className="text-center text-lg">
@@ -175,7 +175,7 @@ function Compare(){
                     </button>
 
                     <h1 className="text-center text-lg font-semibold">
-                        TOTAL TIME : {binarytime} ms
+                        TOTAL TIME : {binarytime} sec
                     </h1>
 
                     <h1 className="text-center text-lg">
