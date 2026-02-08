@@ -8,7 +8,7 @@ import { CChart } from '@coreui/react-chartjs'
 ModuleRegistry.registerModules([AllCommunityModule]);
 function Search(){
     const{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range}=useContext(Helper);
-     const chartdata={
+     const chartdata1={
         labels:arrayselemnts,
             datasets:[
                 {
@@ -31,85 +31,155 @@ function Search(){
                 },
             ],
         };
-    return <div className="mt-5">
-        <ToastContainer/>
-        <div className="flex  justify-center items-center flex-col">
-            <h1 className="text-center font-bold  p-3 text-6xl text-blue-900    ">SEARCHING IN PROGRAMMING</h1>
-            <div className="mt-3">
-                <p className="text-2xl capitalize text-blue-700 w-250 ">
-                   Searching in programming is a fundamental concept used to locate a specific element or piece of data within a collection such as an array, list, or database. It plays a crucial role in almost every software application, from finding a user in a system to retrieving information from large datasets. Efficient searching helps reduce time complexity and improves the overall performance of programs, especially when dealing with large amounts of data.
 
-There are different searching techniques based on how the data is organized. Linear search checks each element one by one and is simple to implement, making it useful for small or unsorted datasets. Binary search, on the other hand, is much faster but requires the data to be sorted beforehand. It repeatedly divides the search space in half, significantly reducing the number of comparisons needed. 
-                </p>
+     return (
+    <div className="min-h-screen px-4 py-10">
+      <ToastContainer />
+
+    
+      <div className="max-w-6xl mx-auto text-center">
+        <h1 className="text-3xl md:text-5xl font-bold text-blue-900 mb-6">
+          SEARCHING IN PROGRAMMING
+        </h1>
+        <p className="text-blue-700 text-base md:text-lg leading-relaxed">
+          Searching in programming is a fundamental concept used to locate a
+          specific element within a collection. Linear search works on unsorted
+          data, while binary search is faster but requires sorted arrays.
+        </p>
+      </div>
+
+    
+      {linearsearch && (
+        <div className="max-w-5xl mx-auto mt-16 bg-white shadow-2xl rounded-3xl p-6 md:p-10">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-blue-900">
+              LINEAR SEARCH
+            </h2>
+            <button
+              className="text-red-600 font-bold"
+              onClick={() => setlinearsearch(false)}
+            >
+              ✕
+            </button>
+          </div>
+
+          <CChart type="bar" data={chartdata1} options={options} />
+
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <label className="block text-blue-900 mb-2">Array Size</label>
+              <input
+                type="number"
+                className="w-full border-2 border-blue-800 rounded-xl p-3"
+                onChange={(e) => setarraysize(e.target.value)}
+              />
             </div>
+            <button
+              className="bg-green-800 text-white rounded-xl p-3 self-end"
+              onClick={() => RandomArray("linearsearch")}
+            >
+              Generate
+            </button>
+          </div>
+
+          <div className="mt-6">
+            <label className="block text-blue-900 mb-2">
+              Search Element
+            </label>
+            <input
+              type="number"
+              className="w-full border-2 border-blue-800 rounded-xl p-3"
+              onChange={(e) => setsearchelement(e.target.value)}
+            />
+          </div>
+
+          <button
+            onClick={Linearsearch}
+            className="mt-6 bg-red-800 text-white rounded-xl px-6 py-3"
+          >
+            Submit
+          </button>
+
+          <p className="mt-4 text-blue-900">
+            Result: <span className="text-red-700">{result}</span>
+          </p>
         </div>
-        
-        <div>
-            {linearsearch?<div className="flex justify-center flex-col items-center mt-20 shadow-2xl rounded-3xl p-8 rounded-3xl">
-                <div className="relative">
-                <h1 className=" text-red-900 text-2xl cursor-pointer absolute left-40 top-[-30px]" onClick={()=>setlinearsearch(false)}>X</h1>
-                </div>
-                <h1 className="text-3xl text-blue-900">LINEAR SEARCH GRAPH</h1>
-                <div className="mt-3">
-                     <CChart type="bar" data={chartdata} options={options} className="w-200" />
-                     
-                   
-                </div>
-                <div>
-                    <h1 className="text-2xl text-blue-900 text-center">THIS IS YOUR GIVEN ARRAY </h1>
-                    <label htmlFor="enter array size " className="text-2xl p-4 text-blue-900">ARRAY SIZE</label>
-                    <input className="text-2xl p-4 rounded-4xl border-2 border-blue-900 text-blue-700" type="number" placeholder="enter array size" onChange={(e)=>setarraysize(e.target.value)}/>
-                    <button className="bg-green-800 p-4 ml-3 text-white rounded-2xl" onClick={()=>RandomArray("linearsearch")}>GENRATE</button>
-                </div>
-                <div className="mt-5">
-                    <label className="text-2xl p-4 text-blue-900" htmlFor="search key">ENTER SEARCH ELEMENT</label>
-                    <input  className="text-2xl p-4 rounded-4xl border-2 border-blue-900 text-blue-700" onChange={(e)=>setsearchelement(e.target.value)} type="number"placeholder="enter search element"/>
-                </div>
-                <div className="mt-5">
-                    <button onClick={Linearsearch} className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
-                </div>
-                <div>
-                    <h1 className="text-2xl p-4 text-blue-900">THE FINAL RESULT IS: <span className="text-red-700">{result}</span></h1>
-                </div>
+      )}
 
-            </div>:<></>}
-            {binarysearch?<div className="flex justify-center flex-col items-center mt-20 shadow-2xl rounded-3xl p-8 rounded-3xl">
-                <div className="relative">
-                <h1 className=" text-red-900 text-2xl cursor-pointer absolute left-40 top-[-30px]" onClick={()=>setbinarysearch(false)}>X</h1>
-                </div>
-                <h1 className="text-3xl text-blue-900">BINARY SEARCH GRAPH</h1>
-                <div className="mt-3">
-                    <CChart type="bar" data={chartdata} options={options} className="w-200"/>
-                      
+    
+      {binarysearch && (
+        <div className="max-w-5xl mx-auto mt-16 bg-white shadow-2xl rounded-3xl p-6 md:p-10">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-semibold text-blue-900">
+              BINARY SEARCH
+            </h2>
+            <button
+              className="text-red-600 font-bold"
+              onClick={() => setbinarysearch(false)}
+            >
+              ✕
+            </button>
+          </div>
 
-                </div>
-                 <div >
-                    <h1 className="text-2xl text-blue-900 text-center">THIS IS YOUR GIVEN ARRAY </h1>
-                    <label htmlFor="enter array size" className="text-2xl p-3  text-blue-900">ARRAY SIZE</label>
-                    <input className="text-2xl p-4 rounded-4xl border-2 border-blue-900 text-blue-700" type="number" placeholder="enter array size" onChange={(e)=>setarraysize(e.target.value)}/>
-                    <button className="bg-green-800 p-4 text-white rounded-2xl ml-3" onClick={()=>RandomArray("binarysearch")}>GENRATE</button>
-                </div>
-                <div className="mt-4 flex justify-center items-center">
-                    <label className="text-2xl p-4 text-blue-900" for="search">ENTER SEARCH ELEMENT</label>
-                    <input className="text-2xl p-4 rounded-4xl border-2 border-blue-900 text-blue-700" type="Number"placeholder="enter search element" onChange={(e)=>setbkey(e.target.value)}/>
-                </div>
-                <div className="mt-5">
-                    <button onClick={Binary} className="bg-red-800 p-4 text-white rounded-2xl">SUBMIT</button>
-                </div>
-                <div>
-                    <h1 className="text-2xl p-4 text-blue-900">THE FINAL RESULT IS: <span className="text-red-700">{result2}</span></h1>
-                </div>
+          <CChart type="bar" data={chartdata1} options={options} />
 
+          <div className="grid md:grid-cols-2 gap-6 mt-6">
+            <div>
+              <label className="block text-blue-900 mb-2">Array Size</label>
+              <input
+                type="number"
+                className="w-full border-2 border-blue-800 rounded-xl p-3"
+                onChange={(e) => setarraysize(e.target.value)}
+              />
+            </div>
+            <button
+              className="bg-green-800 text-white rounded-xl p-3 self-end"
+              onClick={() => RandomArray("binarysearch")}
+            >
+              Generate
+            </button>
+          </div>
 
-            </div>:<></>}
+          <div className="mt-6">
+            <label className="block text-blue-900 mb-2">
+              Search Element
+            </label>
+            <input
+              type="number"
+              className="w-full border-2 border-blue-800 rounded-xl p-3"
+              onChange={(e) => setbkey(e.target.value)}
+            />
+          </div>
 
+          <button
+            onClick={Binary}
+            className="mt-6 bg-red-800 text-white rounded-xl px-6 py-3"
+          >
+            Submit
+          </button>
+
+          <p className="mt-4 text-blue-900">
+            Result: <span className="text-red-700">{result2}</span>
+          </p>
         </div>
-        <div className="flex justify-center items-center gap-7 mt-30">
-            <button onClick={()=>setlinearsearch(true)} className="bg-blue-800 p-4 text-white rounded-2xl">LINEAR-SEARCH</button>
-            <button onClick={()=>setbinarysearch(true)} className="bg-blue-800 p-4 text-white rounded-2xl">BINARY-SEARCH</button>
-        </div>
-        
+      )}
+
+    
+      <div className="flex flex-wrap justify-center gap-6 mt-16">
+        <button
+          onClick={() => setlinearsearch(true)}
+          className="bg-blue-800 text-white px-6 py-3 rounded-xl"
+        >
+          Linear Search
+        </button>
+        <button
+          onClick={() => setbinarysearch(true)}
+          className="bg-blue-800 text-white px-6 py-3 rounded-xl"
+        >
+          Binary Search
+        </button>
+      </div>
     </div>
-
+  );
 }
 export default Search;    

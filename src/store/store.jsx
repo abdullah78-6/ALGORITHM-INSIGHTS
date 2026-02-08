@@ -4,11 +4,15 @@ export const Helper=createContext();
 export const Gives=({children})=>{
 const [linearsearch,setlinearsearch]=useState(false);
 const [pivotindex,setpivotindex]=useState(-1);
+const [mergesplit,setmergesplit]=useState({start:-1,end:-1});
 const [binarysearch,setbinarysearch]=useState(false);
 const [arraysize,setarraysize]=useState();
 const [arrayselemnts,setarrayelements]=useState([]);
 const [key,setsearchelement]=useState();
 const[result,setresult]=useState("");
+const [mergerange,setmergerange]=useState({start:-1,end:-1});
+const [mergecompare,setmergecompare]=useState([-1,-1]);
+const [mergesortedtill,setmergesortedtill]=useState(-1);
 const[result2,setresult2]=useState("");
 const[activeindex,setactiveindex]=useState(-1);
 const [foundindex,setfoundindex]=useState(-1);
@@ -56,6 +60,10 @@ function RandomArray(name){
   setfoundindex(-1);
   setpass([]);
   settime(null);
+  setmergesplit({start:-1,end:-1});
+  setmergerange({start:-1,end:-1});
+  setmergecompare([-1,-1]);
+  setmergesortedtill(-1);
 
    if(arraysize>40){
         toast.error("NOTE: The value of size varies from 1 to 40 ",{theme:"colored"});
@@ -419,9 +427,83 @@ async function Quicks(){
   const totalq = ((endq - startq) / 1000).toFixed(2);
   settime(totalq);
 }
+const mergedelay=(ms=400)=>{
+ return  new Promise(res=>setTimeout(res,ms/Number(speed)));
+}
+async function merges(arr, s, mid,e) {
+  let temp=[];
+  let i=s;
+  let j=mid+1;
+  setmergerange({start:s,end:e});
+  await mergedelay();
+  while(i<=mid&&j<=e){
+    setmergecompare([i,j]);
+    await mergedelay();
+    if(arr[i]<=arr[j]){
+      temp.push(arr[i++]);
+    }
+    else{
+      temp.push(arr[j++]);
+    }
+  }
+  while(i<=mid){
+    temp.push(arr[i++]);
+  }
+  while(j<=e){
+    temp.push(arr[j++]);
+
+  }
+  for(let k=0;k<temp.length;k++){
+    arr[s+k]=temp[k];
+    setarrayelements([...arr]);
+    setmergesortedtill(s+k);
+    await mergedelay(300);
+  }
+  setmergecompare([-1,-1]);
+
+    
+
+  
+}
+async function mergeSort(arr, s, e) {
+    if (s >= e) { // base case
+        return;
+       
+    }
+    setmergesplit({start:s,end:e});
+    await mergedelay(50);
+    let mid = Math.floor((s + e) / 2);
+
+    // left part
+   await  mergeSort(arr, s, mid);
+
+    // right part
+    await mergeSort(arr, mid + 1, e);
+
+    // merge
+    await merges(arr, s,mid, e);
+    setmergesplit({start:-1,end:-1});
+     
+}
+async function Merges(){
+  if(arrayselemnts.length===0||!speed){
+    toast.error("PLEASE GENRATE ARRAY FIRST",{theme:"colored"});
+    return ;
+  }
+  const sm=performance.now();
+  let arr=[...arrayselemnts];
+  setmergesortedtill(-1);
+  await mergeSort(arr,0,arr.length-1);
+  const em=performance.now();
+  const tm=((em-sm)/1000).toFixed(2);
+  settime(tm);
+  
   
 
-return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles,lineartime,binarytime,Quicks,pivotindex}}>
+}
+  
+
+return <Helper.Provider value={{RandomArray,linearsearch,binarysearch,setbinarysearch,setlinearsearch,arraysize,setarraysize,arrayselemnts,setarrayelements,options,Linearsearch,setsearchelement,result,activeindex,foundindex,Binary,setbkey,result2,range,merge,quick,selection,insertion,bubble,setmerge,setinsertion,setquick,setselection,setbubble,Selection,time,pass,speed,setspeed,Insertion,Bubbles,lineartime,binarytime,Quicks,pivotindex,Merges,mergerange,mergecompare,mergesortedtill,mergesplit}}>
         {children}
     </Helper.Provider>
 
